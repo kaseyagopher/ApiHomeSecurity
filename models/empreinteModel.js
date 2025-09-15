@@ -1,33 +1,36 @@
 const db = require('../db');
 
 const Empreinte = {
-  getAll: (callback) => {
-    db.query('SELECT * FROM empreintes', callback);
-  },
-
-  getById: (id, callback) => {
-    db.query('SELECT * FROM empreintes WHERE id = ?', [id], callback);
-  },
-
-  create: (data, callback) => {
-    db.query(
-      'INSERT INTO empreintes (template, dateCapture, statut) VALUES (?, NOW(), ?)',
-      [data.template, data.statut || 1],
-      callback
-    );
-  },
-
-  update: (id, data, callback) => {
-    db.query(
-      'UPDATE empreintes SET template = ?, statut = ? WHERE id = ?',
-      [data.template, data.statut, id],
-      callback
-    );
-  },
-
-  delete: (id, callback) => {
-    db.query('DELETE FROM empreintes WHERE id = ?', [id], callback);
-  }
+    getAll: (callback) => {
+        // La logique `(err, results)` de User.js est appliquée ici
+        db.query('SELECT * FROM empreintedigital', (err, results) => {
+            callback(err, results);
+        });
+    },
+    getById: (id, callback) => {
+        // La logique de User.js est appliquée ici pour le getById
+        db.query('SELECT * FROM empreintedigital WHERE id = ?', [id], callback);
+    },
+    create: (data, callback) => {
+        // La logique de User.js est appliquée ici
+        db.query(
+            'INSERT INTO empreintedigital (template, dateCapture, statut) VALUES (?, ?, ?)',
+            [data.template, data.dateCapture, data.statut],
+            callback
+        );
+    },
+    update: (id, data, callback) => {
+        // La logique de User.js est appliquée ici
+        db.query(
+            'UPDATE empreintedigital SET template = ?, dateCapture = ?, statut = ? WHERE id = ?',
+            [data.template, data.dateCapture, data.statut, id],
+            callback
+        );
+    },
+    delete: (id, callback) => {
+        // La logique de User.js est appliquée ici
+        db.query('DELETE FROM empreintedigital WHERE id = ?', [id], callback);
+    }
 };
 
 module.exports = Empreinte;
